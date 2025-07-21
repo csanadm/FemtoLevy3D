@@ -18,7 +18,7 @@ int main()
   for(double Q=0.001; Q<0.2; Q+=0.001)
   {
     // Full correlation function, including the Coulomb effect, with the specified lambda value
-    double Full3DCorrFuncValueDiag = cccinstance->Full3DCorrFuncValue(alpha, Ro, Rs, Rl, lambda, Q, Q, Q);
+    //double Full3DCorrFuncValueDiag = cccinstance->Full3DCorrFuncValue(alpha, Ro, Rs, Rl, lambda, Q, Q, Q);
     double Full3DCorrFuncValueOut  = cccinstance->Full3DCorrFuncValue(alpha, Ro, Rs, Rl, lambda, Q, 0, 0);
     double Full3DCorrFuncValueSide = cccinstance->Full3DCorrFuncValue(alpha, Ro, Rs, Rl, lambda, 0, Q, 0);
     double Full3DCorrFuncValueLong = cccinstance->Full3DCorrFuncValue(alpha, Ro, Rs, Rl, lambda, 0, 0, Q);
