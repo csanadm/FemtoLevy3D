@@ -61,9 +61,27 @@ void Levy3D_CoulCalc::SetIntegrationProperties(int _NMaxIter, double _epsToleran
   SetParticleMass(Mass_Pi);
 }
 
+// Setting the particle mass
 void Levy3D_CoulCalc::SetParticleMass(const double _Mc2) // Mc2 is the mass of the particle (not the reduced mass) IN GEV/C^2
 {
   Mc2 = _Mc2*1000; // GeV -> MeV conversion
+}
+
+// This uses the regular radii and GeV units!!!!
+double Levy3D_CoulCalc::Full3DCorrFuncValue(double alpha, double Ro, double Rs, double Rl, double lambda, double Qo, double Qs, double Ql)
+{
+	double Rocc = Ro*pow(2.,1./alpha);
+	double Rscc = Rs*pow(2.,1./alpha);
+	double Rlcc = Rl*pow(2.,1./alpha);
+	return 1. - lambda + lambda * get_C2Pi_3d_full(alpha, Rocc*Rocc, Rscc*Rscc, Rlcc*Rlcc, Qo*1000., Qs*1000, Ql*1000);
+}
+
+// This uses the regular radii and GeV units!!!!
+double Levy3D_CoulCalc::Full3DCoulCorrValue(double alpha, double Ro, double Rs, double Rl, double lambda, double Qo, double Qs, double Ql)
+{
+	double corrfuncvalue = Full3DCorrFuncValue(alpha, Ro, Rs, Rl, lambda, Qo, Qs, Ql);
+	double purecorrvalue = 1.0 + lambda * exp(-pow( (Qo*Qo*Ro*Ro+Qs*Qs*Rs*Rs+Ql*Ql*Rl*Rl)/SQR(HBARC), alpha/2.0));
+	return corrfuncvalue / purecorrvalue;
 }
 
 // Calculating the Sommerfeld parameter eta
@@ -210,15 +228,6 @@ double Levy3D_CoulCalc::get_C2Pi_3d_full(const double _alpha, const double _R2oo
   init_3d_sourcepars(_R2oo, _R2ss, _R2ll, _alpha);
   set_kvector(Qo / 2.0, Qs / 2.0, Ql / 2.0);
   return Gamow_factor * ( f_3d_0 + f_3d_2k +  eta / M_PI * (get_A1() + get_A2P() + get_A2d()) );
-}
-
-// This uses the regular radii and GeV units!!!!
-double Levy3D_CoulCalc::Full3DCorrFuncValue(double alpha, double Ro, double Rs, double Rl, double lambda, double Qo, double Qs, double Ql)
-{
-	double Rocc = Ro*pow(2.,1./alpha);
-	double Rscc = Rs*pow(2.,1./alpha);
-	double Rlcc = Rl*pow(2.,1./alpha);
-	return 1. - lambda + lambda * get_C2Pi_3d_full(alpha, Rocc*Rocc, Rscc*Rscc, Rlcc*Rlcc, Qo*1000., Qs*1000, Ql*1000);
 }
 
 void Levy3D_CoulCalc::init_3d_sourcepars(const double _R2oo, const double _R2ss, const double _R2ll, const double _alpha)

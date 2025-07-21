@@ -28,6 +28,9 @@ class Levy3D_CoulCalc
 
   // Calculate full 3D correlation function, Ro, Rs, Rl: HBT radii in fm, Qo, Qs, Ql: momentum differences in PCMS, GeV/c
 	double Full3DCorrFuncValue(double alpha, double Ro, double Rs, double Rl, double lambda, double Qo, double Qs, double Ql);
+	
+  // Calculate full 3D Coulomb correction, Ro, Rs, Rl: HBT radii in fm, Qo, Qs, Ql: momentum differences in PCMS, GeV/c
+	double Full3DCoulCorrValue(double alpha, double Ro, double Rs, double Rl, double lambda, double Qo, double Qs, double Ql);
 
  private:
   // Private functions, explained in the source code
