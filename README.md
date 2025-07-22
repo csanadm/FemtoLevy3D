@@ -25,7 +25,8 @@ This package contains a calculation for quantum-statistical correlation function
 - [**coulcorrtest.cc**](coulcorrtest.cc): An example code for testing the library
 - [**coulcorrtest.py**](coulcorrtest.py): A `python` plotter for the test result
 - [**coulcorrtestcompare.cc**](coulcorrtestcompare.cc): Comparing the new 3D calculation to an approximation where the Coulomb correction is calculated based on a spherically symmetric source
-- [**coulcorrtestcompare.py**](coulcorrtestcompare.py): A `python` plotter for `coulcorrtestcompare.cc`
+- [**coulcorrtestcompare.py**](coulcorrtestcompare.py): A `python` plotter for comparing the full and the approximative result, from `coulcorrtestcompare.cc`
+- [**coulcorrcompare.betatest.py**](coulcorrcompare.betatest.py): A `python` plotter for the $\beta_{T}$-dependence of the relative error, calculated via `coulcorrtestcompare.cc`
 
 
 ## Running the codes
