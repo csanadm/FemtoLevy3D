@@ -21,8 +21,8 @@ int main()
 
   for(double Q=0.001; Q<0.150; Q+=0.001)
   {
-		double QoPCMS = Q*sqrt(1-betaT*betaT);
-		double RoPCMS = Ro/sqrt(1-betaT*betaT);
+    double QoPCMS = Q*sqrt(1-betaT*betaT);
+    double RoPCMS = Ro/sqrt(1-betaT*betaT);
     double RPCMS = sqrt((RoPCMS*RoPCMS + Rs*Rs + Rl*Rl)/3);
 		
     // Cfull (3D Coulomb)
@@ -30,7 +30,7 @@ int main()
     double Cfull_qside = ccc->Full3DCorrFuncValue(alpha, RoPCMS, Rs, Rl, lambda, 0,      Q, 0);
     double Cfull_qlong = ccc->Full3DCorrFuncValue(alpha, RoPCMS, Rs, Rl, lambda, 0,      0, Q);
 		
-		// Capprox (spherical Coulomb)
+    // Capprox (spherical Coulomb)
     double Capprox_qout  = 1 - lambda + lambda * ccc->Full3DCoulCorrValue(alpha, RPCMS, RPCMS, RPCMS, 1.0, QoPCMS, 0, 0) * (1.0 + exp( -pow((Q*Q*Ro*Ro)/hbarcgev/hbarcgev, alpha/2.0) ));
     double Capprox_qside = 1 - lambda + lambda * ccc->Full3DCoulCorrValue(alpha, RPCMS, RPCMS, RPCMS, 1.0, 0,      Q, 0) * (1.0 + exp( -pow((Q*Q*Rs*Rs)/hbarcgev/hbarcgev, alpha/2.0) ));
     double Capprox_qlong = 1 - lambda + lambda * ccc->Full3DCoulCorrValue(alpha, RPCMS, RPCMS, RPCMS, 1.0, 0,      0, Q) * (1.0 + exp( -pow((Q*Q*Rl*Rl)/hbarcgev/hbarcgev, alpha/2.0) ));
@@ -39,9 +39,9 @@ int main()
          << Cfull_qout << "\t" << Capprox_qout << "\t"
          << Cfull_qside << "\t" << Capprox_qside << "\t"
          << Cfull_qlong << "\t" << Capprox_qlong << "\n";
-		cerr << ".";
+    cerr << ".";
   }
-	cerr << endl;
+  cerr << endl;
 
   delete ccc;
   return 0;
