@@ -80,7 +80,7 @@ double Levy3D_CoulCalc::Full3DCorrFuncValue(double alpha, double Ro, double Rs, 
 double Levy3D_CoulCalc::Full3DCoulCorrValue(double alpha, double Ro, double Rs, double Rl, double lambda, double Qo, double Qs, double Ql)
 {
 	double corrfuncvalue = Full3DCorrFuncValue(alpha, Ro, Rs, Rl, lambda, Qo, Qs, Ql);
-	double purecorrvalue = 1.0 + lambda * exp(-pow( (Qo*Qo*Ro*Ro+Qs*Qs*Rs*Rs+Ql*Ql*Rl*Rl)/SQR(HBARC), alpha/2.0));
+	double purecorrvalue = 1.0 + lambda * exp(-pow( (Qo*Qo*Ro*Ro+Qs*Qs*Rs*Rs+Ql*Ql*Rl*Rl)/SQR(HBARC/1000.) ,alpha/2.0) );
 	return corrfuncvalue / purecorrvalue;
 }
 
