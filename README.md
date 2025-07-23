@@ -40,13 +40,13 @@ This package contains a calculation for quantum-statistical correlation function
 ## Example results
 
 ### An example result
-<img width="1200" alt="coulcorrtest" src="https://github.com/user-attachments/assets/b1ad9c6c-1c84-4adc-8dc0-bcabbaf783ba" />
+<img width="600" alt="coulcorrtest" src="https://github.com/user-attachments/assets/b1ad9c6c-1c84-4adc-8dc0-bcabbaf783ba" />
 
 ### Comparision between the full calculation and an approximation
-<img width="1200" alt="coulcorrcompare" src="https://github.com/user-attachments/assets/152acf79-b01a-45ac-9ba4-e40082c92e24" />
+<img width="600" alt="coulcorrcompare" src="https://github.com/user-attachments/assets/152acf79-b01a-45ac-9ba4-e40082c92e24" />
 
 ### Difference between the full calculation and an approximation
-<img width="800" alt="coulcorrcompare betatest" src="https://github.com/user-attachments/assets/1611abd3-e52a-45cd-a19f-04c858229eed" />
+<img width="400" alt="coulcorrcompare betatest" src="https://github.com/user-attachments/assets/1611abd3-e52a-45cd-a19f-04c858229eed" />
 
 ### 2D differences
 <img width="300" alt="coulcorrcompare 2D Cdiff qOqL" src="https://github.com/user-attachments/assets/8c23fb02-1834-4091-87f6-7927f03c8947" />
