@@ -24,7 +24,7 @@ void FillHists(const int i1, const int i2, const double qout, const double qside
   double RPCMS = sqrt((RoPCMS * RoPCMS + Rs * Rs + Rl * Rl) / 3.0);
   
   double Cfull = ccc->Full3DCorrFuncValue(alpha, RoPCMS, Rs, Rl, lambda, QoPCMS, qside, qlong);
-  double K2 = ccc->Full3DCoulCorrValue(alpha, RPCMS, RPCMS, RPCMS, 1.0, qout, qside, qlong);
+  double K2 = ccc->Full3DCoulCorrValue(alpha, RPCMS, RPCMS, RPCMS, 1.0, QoPCMS, qside, qlong);
   double qRq = qout * qout * Ro * Ro + qside * qside * Rs * Rs + qlong * qlong * Rl * Rl;
   double Capprox = 1 - lambda + lambda * K2 * (1.0 + exp(-pow(qRq/(hbarcgev*hbarcgev), alpha/2.0)));
   
