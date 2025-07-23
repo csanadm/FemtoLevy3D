@@ -27,7 +27,8 @@ This package contains a calculation for quantum-statistical correlation function
 - [**coulcorrcompare.cc**](coulcorrcompare.cc): Comparing the new 3D calculation to an approximation where the Coulomb correction is calculated based on a spherically symmetric source
 - [**coulcorrcompare.py**](coulcorrcompare.py): A `python` plotter for comparing the full and the approximative result, from `coulcorrcompare.cc`
 - [**coulcorrcompare.betatest.py**](coulcorrcompare.betatest.py): A `python` plotter for the $\beta_{T}$-dependence of the relative error, calculated via `coulcorrcompare.cc`
-- [**coulcorrcompare.2D.cc**](coulcorrcompare.2D.cc): Comparing the new 3D calculation to the approximation, a 2D version, with `ROOT` plotter
+- [**coulcorrcompare.2D.cc**](coulcorrcompare.2D.cc): Comparing the new 3D calculation to the approximation, a 2D version
+- [**coulcorrcompare.2D.plot.cc**](coulcorrcompare.2D.plot.cc): A `ROOT` plotter for the results of `coulcorrcompare.2D.cc`
 
 
 ## Running the codes
@@ -38,6 +39,17 @@ This package contains a calculation for quantum-statistical correlation function
 
 ## Example results
 
+### An example result
 <img width="1200" alt="coulcorrtest" src="https://github.com/user-attachments/assets/b1ad9c6c-1c84-4adc-8dc0-bcabbaf783ba" />
+
+### Comparision between the full calculation and an approximation
 <img width="1200" alt="coulcorrcompare" src="https://github.com/user-attachments/assets/152acf79-b01a-45ac-9ba4-e40082c92e24" />
+
+### Difference between the full calculation and an approximation
 <img width="800" alt="coulcorrcompare betatest" src="https://github.com/user-attachments/assets/1611abd3-e52a-45cd-a19f-04c858229eed" />
+
+### 2D differences
+<img width="300" alt="coulcorrcompare 2D Cdiff qOqL" src="https://github.com/user-attachments/assets/8c23fb02-1834-4091-87f6-7927f03c8947" />
+<img width="300" alt="coulcorrcompare 2D Cdiff qTqL" src="https://github.com/user-attachments/assets/74764955-847a-4394-b6ba-aba27b0f1e59" />
+<img width="300" alt="coulcorrcompare 2D Cdiff qSqL" src="https://github.com/user-attachments/assets/86b274e0-432f-4e63-b4f1-c6879d0223a3" />
+<img width="300" alt="coulcorrcompare 2D Cdiff qOqS" src="https://github.com/user-attachments/assets/90c65a73-d4f6-418e-941a-0b8eca558096" />
