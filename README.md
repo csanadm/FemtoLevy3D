@@ -49,7 +49,4 @@ This package contains a calculation for quantum-statistical correlation function
 <img width="400" alt="coulcorrcompare betatest" src="https://github.com/user-attachments/assets/1611abd3-e52a-45cd-a19f-04c858229eed" />
 
 ### 2D differences
-<img width="300" alt="coulcorrcompare 2D Cdiff qOqL" src="https://github.com/user-attachments/assets/8c23fb02-1834-4091-87f6-7927f03c8947" />
-<img width="300" alt="coulcorrcompare 2D Cdiff qTqL" src="https://github.com/user-attachments/assets/74764955-847a-4394-b6ba-aba27b0f1e59" />
-<img width="300" alt="coulcorrcompare 2D Cdiff qSqL" src="https://github.com/user-attachments/assets/86b274e0-432f-4e63-b4f1-c6879d0223a3" />
-<img width="300" alt="coulcorrcompare 2D Cdiff qOqS" src="https://github.com/user-attachments/assets/90c65a73-d4f6-418e-941a-0b8eca558096" />
+<img width="600" alt="coulcorrcompare 2D Cdiff" src="https://github.com/user-attachments/assets/759b0bc7-f480-4c0d-a0b7-aff0b6eb499f" />
