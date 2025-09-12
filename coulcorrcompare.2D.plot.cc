@@ -3,60 +3,128 @@
 #include "TCanvas.h"
 #include "TStyle.h"
 #include "TFile.h"
+#include "TPad.h"
+#include "TGaxis.h"
+#include "TPaletteAxis.h"
 
-using namespace std;
-
-const double alpha = 1.2;
-const double Ro = 5.7;
-const double Rs = 5.0;
-const double Rl = 6.8;
-const double lambda = 0.8;
-const double betaT = 0.95;
-
-void PrintHists(TCanvas *c1, TH2D* hCfull, TH2D* hCappr, TH2D* hCdiff, const char* tag)
+void Print2x2(const char* what,
+              TH2D* h1, TH2D* h2,
+              TH2D* h3, TH2D* h4)
 {
-  hCfull->SetTitle(Form("#alpha=%.1f, R_{o}=%.1f, R_{s}=%.1f, R_{l}=%.1f, #lambda=%.1f, #beta_{T}=%.1f",alpha,Ro,Rs,Rl,lambda,betaT));
-  hCfull->Draw("COLZ");
-  c1->Print(Form("coulcorrcompare.2D.Cfull.%s.png",tag));
-  
-  hCappr->SetTitle(Form("#alpha=%.1f, R_{o}=%.1f, R_{s}=%.1f, R_{l}=%.1f, #lambda=%.1f, #beta_{T}=%.1f",alpha,Ro,Rs,Rl,lambda,betaT));
-  hCappr->Draw("COLZ");
-  c1->Print(Form("coulcorrcompare.2D.Capprox.%s.png",tag));
-  
-  hCdiff->SetTitle(Form("#alpha=%.1f, R_{o}=%.1f, R_{s}=%.1f, R_{l}=%.1f, #lambda=%.1f, #beta_{T}=%.1f",alpha,Ro,Rs,Rl,lambda,betaT));
-  hCdiff->Draw("COLZ");
-  hCdiff->GetZaxis()->SetRangeUser(2.e-8,8.e-1);
-  c1->SetLogz(1);
-  c1->Print(Form("coulcorrcompare.2D.Cdiff.%s.png",tag));
-  return; 
+  TCanvas* c = new TCanvas(Form("c_%s",what),what,800,800);
+
+  // Define pads manually (tight, no spacing)
+  double margin = 0.17;
+  double midX = 0.50;
+  double midY = 0.50;
+  double maxX = 1.00;
+  double maxY = 1.00;
+
+  TPad* pad1 = new TPad("pad1","",0.00, midY, midX, maxY); // top-left
+  TPad* pad2 = new TPad("pad2","",midX, midY, maxX, maxY); // top-right
+  TPad* pad3 = new TPad("pad3","",0.00, 0.00, midX, midY); // bottom-left
+  TPad* pad4 = new TPad("pad4","",midX, 0.00, maxX, midY); // bottom-right
+
+  pad1->Draw(); pad2->Draw(); pad3->Draw(); pad4->Draw();
+
+  TH2D* hists[4] = {h1,h2,h3,h4};
+  TPad* pads[4]  = {pad1,pad2,pad3,pad4};
+
+  for (int i=0;i<4;++i) {
+    pads[i]->cd();
+    pads[i]->SetRightMargin((i%2==1) ? margin : 0.01);
+    pads[i]->SetLeftMargin((i%2==0) ? margin : 0.01);
+    pads[i]->SetBottomMargin((i>=2) ? margin : 0.01);
+    pads[i]->SetTopMargin((i<2) ? margin : 0.01);
+
+    if (strcmp(what,"Cdiff")==0) {
+      pads[i]->SetLogz(1);
+      hists[i]->GetZaxis()->SetRangeUser(2.e-5,5.e-2);
+    }
+
+    double qmax = 0.095;
+    hists[i]->GetXaxis()->SetRangeUser(0,qmax);
+    hists[i]->GetYaxis()->SetRangeUser(0,qmax);
+
+    // Hide inner axes
+    if (i%2==1) hists[i]->GetYaxis()->SetLabelSize(0);
+    if (i<2)    hists[i]->GetXaxis()->SetLabelSize(0);
+
+    hists[i]->SetTitle("");
+    // draw hist
+    if (i%2==1) {
+      hists[i]->Draw("COLZ");
+      gPad->Modified();
+      gPad->Update();
+      TPaletteAxis *palette = (TPaletteAxis*)hists[i]->GetListOfFunctions()->FindObject("palette");
+      palette->SetX1NDC(0.87);
+      palette->SetX2NDC(0.92);
+      palette->SetY1NDC(0.01+(i-1)*0.077);
+      palette->SetY2NDC(0.99+(i-3)*0.077);
+      gPad->Modified();
+      gPad->Update();
+    }
+    else        hists[i]->Draw("COL");
+    
+    // now get pad coordinates
+    double xlow = 0;
+    double xup  = qmax;
+    double ylow = 0;
+    double yup  = qmax;
+    
+    // add top axes
+    TGaxis *topAxis = new TGaxis(xlow, yup, xup, yup, xlow, xup, 510, "-U");
+    if (i < 2) {
+      topAxis->SetLabelSize(hists[i]->GetXaxis()->GetLabelSize());
+      topAxis->SetLabelFont(hists[i]->GetXaxis()->GetLabelFont());
+      topAxis->SetTitle(hists[i]->GetXaxis()->GetTitle());
+      topAxis->SetTitleSize(hists[i]->GetXaxis()->GetTitleSize());
+      topAxis->SetTitleOffset(0.4);
+    }
+    topAxis->Draw();
+    
+    // add right axes
+    TGaxis *rightAxis = new TGaxis(xup, ylow, xup, yup, ylow, yup, 510, "+U");
+    if (i % 2 == 1) {
+      rightAxis->SetLabelSize(hists[i]->GetYaxis()->GetLabelSize());
+      rightAxis->SetLabelFont(hists[i]->GetYaxis()->GetLabelFont());
+      rightAxis->SetTitle(hists[i]->GetYaxis()->GetTitle());
+      rightAxis->SetTitleSize(hists[i]->GetYaxis()->GetTitleSize());
+      rightAxis->SetTitleOffset(0.5);
+    }
+    rightAxis->Draw();
+  }
+
+  c->Print(Form("coulcorrcompare.2D.%s.pdf",what));
 }
 
 int main()
 {
   TFile* f = new TFile("coulcorrcompare.2D.root");
 
+  // full
   TH2D* hCfullqOqL = (TH2D*)f->Get("Cfull2DqOqL");
-  TH2D* hCapprqOqL = (TH2D*)f->Get("Cappr2DqOqL");
-  TH2D* hCdiffqOqL = (TH2D*)f->Get("Cdiff2DqOqL");
-  
   TH2D* hCfullqOqS = (TH2D*)f->Get("Cfull2DqOqS");
-  TH2D* hCapprqOqS = (TH2D*)f->Get("Cappr2DqOqS");
-  TH2D* hCdiffqOqS = (TH2D*)f->Get("Cdiff2DqOqS");
-  
   TH2D* hCfullqSqL = (TH2D*)f->Get("Cfull2DqSqL");
-  TH2D* hCapprqSqL = (TH2D*)f->Get("Cappr2DqSqL");
-  TH2D* hCdiffqSqL = (TH2D*)f->Get("Cdiff2DqSqL");
-  
   TH2D* hCfullqTqL = (TH2D*)f->Get("Cfull2DqTqL");
+
+  // approx
+  TH2D* hCapprqOqL = (TH2D*)f->Get("Cappr2DqOqL");
+  TH2D* hCapprqOqS = (TH2D*)f->Get("Cappr2DqOqS");
+  TH2D* hCapprqSqL = (TH2D*)f->Get("Cappr2DqSqL");
   TH2D* hCapprqTqL = (TH2D*)f->Get("Cappr2DqTqL");
+
+  // diff
+  TH2D* hCdiffqOqL = (TH2D*)f->Get("Cdiff2DqOqL");
+  TH2D* hCdiffqOqS = (TH2D*)f->Get("Cdiff2DqOqS");
+  TH2D* hCdiffqSqL = (TH2D*)f->Get("Cdiff2DqSqL");
   TH2D* hCdiffqTqL = (TH2D*)f->Get("Cdiff2DqTqL");
-  
+
   gStyle->SetOptStat(0);
-  TCanvas* c1 = new TCanvas("c1", "Full", 800, 600);
-  PrintHists(c1, hCfullqOqL, hCapprqOqL, hCdiffqOqL, "qOqL");
-  PrintHists(c1, hCfullqOqS, hCapprqOqS, hCdiffqOqS, "qOqS");
-  PrintHists(c1, hCfullqSqL, hCapprqSqL, hCdiffqSqL, "qSqL");
-  PrintHists(c1, hCfullqTqL, hCapprqTqL, hCdiffqTqL, "qTqL");
+
+  Print2x2("Cfull", hCfullqOqL,hCfullqOqS,hCfullqSqL,hCfullqTqL);
+  Print2x2("Cappr", hCapprqOqL,hCapprqOqS,hCapprqSqL,hCapprqTqL);
+  Print2x2("Cdiff", hCdiffqOqL,hCdiffqOqS,hCdiffqSqL,hCdiffqTqL);
 
   return 0;
 }
