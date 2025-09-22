@@ -3,7 +3,16 @@
  Bose-Einstein correlation function integral calculation based on a 3D, not necessarily spherical Lévy source, incorporating the Coulomb final-state interaction. Most of the integrals can be performed analytically, only very well behaving integrals remain, similarly to <a href="https://github.com/csanadm/CoulCorrLevyIntegral/">https://github.com/csanadm/CoulCorrLevyIntegral/</a>.
 
 ## Description
-This package contains a calculation for quantum-statistical correlation functions, including Coulomb-correction, based on analytic results and final numerical integration. For the calculation to work, the `boost` library is needed, although the numerical integral can be programmed by the user as well. One plotting code and the fit test requires `ROOT` (latter also `Minuit2`), and several `python` libraries are required for the `python` plotters as well.
+This package contains a calculation for quantum-statistical correlation functions, including Coulomb-correction, based on anlytic results and final numerical integration.
+
+## Dependencies
+For the calculation to work, the following libraries are needed:
+- **C++**:
+  - `boost`: for numerical integration.
+  - `ROOT`: for some of the plotting scripts and fitting tests. `Minuit2` is also required for the fit tests.
+- **Python**:
+  - `numpy`: for data handling.
+  - `matplotlib`: for plotting.
 
 ## File content
 
