@@ -41,9 +41,9 @@ class Levy3D_CoulCalc
   double A1_int(const double k, const double R, const double alpha, const double betat);
   double A2_int(const double k, const double R, const double alpha, const double betat);
 
-  double f_3d(const double _qout, const double _qside, const double _qlong); // pars must be already initialized!
-  double f1_3d(const double phi, const double a, const double beta);
-  double f2_3d(const double phi, const double b, const double y);
+  inline double f_3d(const double _qout, const double _qside, const double _qlong); // pars must be already initialized!
+  inline double f1_3d(const double phi, const double a, const double beta);
+  inline double f2_3d(const double phi, const double b, const double y);
   double f1_3d_phiintegrated(const double xi, const double a); // beta = xi^2/(1.-xi)
   double f2_3d_phiintegrated(const double y, const double b);
   double f1_3d_phixi_integrated(const double a);
@@ -126,3 +126,4 @@ class Levy3D_CoulCalc
 };
 
 #endif // _Levy3D_CoulCalc_h_
+
