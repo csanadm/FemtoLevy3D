@@ -115,7 +115,8 @@ double Levy3D_CoulCalc::f1_3d_phiintegrated(const double xi, const double a)
     return 0.; // except if alpha <= 0.5; DONT GO THERE!!!!
   double error = 0.;
   double beta = xi * xi / (1.-xi);
-  auto func = bind(&Levy3D_CoulCalc::f1_3d, this, placeholders::_1, a, beta);
+  //auto func = bind(&Levy3D_CoulCalc::f1_3d, this, placeholders::_1, a, beta);
+  auto func = [this, a, beta](double phi) { return f1_3d(phi, a, beta); };
   double result = boost::math::quadrature::gauss_kronrod<double, NGaussKronrod>::integrate(func, -M_PI, M_PI, NMaxIter, epsTolerance, &error);
   return result / (a*a + beta*beta) * xi * (2. - xi) / (1.-xi) / (1.-xi);
 }
@@ -123,7 +124,8 @@ double Levy3D_CoulCalc::f1_3d_phiintegrated(const double xi, const double a)
 double Levy3D_CoulCalc::f1_3d_phixi_integrated(const double a)
 {
   double error = 0.;
-  auto func = bind(&Levy3D_CoulCalc::f1_3d_phiintegrated, this, placeholders::_1, a);
+  //auto func = bind(&Levy3D_CoulCalc::f1_3d_phiintegrated, this, placeholders::_1, a);
+  auto func = [this, a](double xi) { return f1_3d_phiintegrated(xi, a); };
   double result = boost::math::quadrature::gauss_kronrod<double, NGaussKronrod>::integrate(func, 0., 1., NMaxIter, epsTolerance, &error);
   return result;
 }
@@ -131,7 +133,8 @@ double Levy3D_CoulCalc::f1_3d_phixi_integrated(const double a)
 double Levy3D_CoulCalc::f2_3d_phiintegrated(const double y, const double b)
 {
   double error = 0.;
-  auto func = bind(&Levy3D_CoulCalc::f2_3d, this, placeholders::_1, b, y);
+  //auto func = bind(&Levy3D_CoulCalc::f2_3d, this, placeholders::_1, b, y);
+  auto func = [this, b, y](double phi) { return f2_3d(phi, b, y); };
   double result = boost::math::quadrature::gauss_kronrod<double, NGaussKronrod>::integrate(func, -M_PI, M_PI, NMaxIter, epsTolerance, &error);
   return result * (1.-y) / (1. + b*y*y);
 }
@@ -301,3 +304,4 @@ void Levy3D_CoulCalc::calc_qvector_for_A2(const double b, const double y, const 
     qz = norm * ( term_xy * cosphi * epx_z + term_xy * sinphi * epy_z + term_z * epz_z); 
   }
 }
+
