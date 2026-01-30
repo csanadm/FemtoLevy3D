@@ -4,7 +4,7 @@
 // Constructor
 Levy3D_CoulCalc::Levy3D_CoulCalc()
 {
-  Mc2 = SQR(139.57039); // to start with the pion mass... better to be set when starting calculations anyway!
+  Mc2 = 139.57039; // to start with the pion mass... better to be set when starting calculations anyway!
   eta = 0.;
   Ychi = 1.;
   Gamow_factor = 1.;
@@ -304,4 +304,5 @@ void Levy3D_CoulCalc::calc_qvector_for_A2(const double b, const double y, const 
     qz = norm * ( term_xy * cosphi * epx_z + term_xy * sinphi * epy_z + term_z * epz_z); 
   }
 }
+
 
